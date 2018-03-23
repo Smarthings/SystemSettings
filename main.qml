@@ -26,7 +26,7 @@ ApplicationWindow {
         onAccentChanged: Theme.accent = accent
     }
 
-    Component.onCompleted: Theme.dark = settings.dark
+    //Component.onCompleted: Theme.dark = settings.dark
 
     StackView {
         id: stackview

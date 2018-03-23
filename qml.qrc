@@ -2,5 +2,51 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>UiTheme/assets/background-blur.png</file>
+        <file>UiTheme/fonts/MaterialIcons.ttf</file>
+        <file>UiTheme/fonts/Ubuntu.ttf</file>
+        <file>UiTheme/ApplicationPage.qml</file>
+        <file>UiTheme/Badges.qml</file>
+        <file>UiTheme/BorderBottom.qml</file>
+        <file>UiTheme/Button.qml</file>
+        <file>UiTheme/CheckBox.qml</file>
+        <file>UiTheme/CheckDelegate.qml</file>
+        <file>UiTheme/CheckIndicator.qml</file>
+        <file>UiTheme/ComboBox.qml</file>
+        <file>UiTheme/Dialog.qml</file>
+        <file>UiTheme/DialogButtonBox.qml</file>
+        <file>UiTheme/Drawer.qml</file>
+        <file>UiTheme/Frame.qml</file>
+        <file>UiTheme/GroupBox.qml</file>
+        <file>UiTheme/GroupBoxForm.ui.qml</file>
+        <file>UiTheme/ItemDelegate.qml</file>
+        <file>UiTheme/Page.qml</file>
+        <file>UiTheme/Pane.qml</file>
+        <file>UiTheme/qmldir</file>
+        <file>UiTheme/RadioButton.qml</file>
+        <file>UiTheme/RadioDelegate.qml</file>
+        <file>UiTheme/RadioIndicator.qml</file>
+        <file>UiTheme/RangeSlider.qml</file>
+        <file>UiTheme/RoundButton.qml</file>
+        <file>UiTheme/ScrollablePage.qml</file>
+        <file>UiTheme/ScrollablePane.qml</file>
+        <file>UiTheme/Slider.qml</file>
+        <file>UiTheme/Spacing.qml</file>
+        <file>UiTheme/SpinBox.qml</file>
+        <file>UiTheme/SwipeDelegate.qml</file>
+        <file>UiTheme/Switch.qml</file>
+        <file>UiTheme/SwitchDelegate.qml</file>
+        <file>UiTheme/SwitchIndicator.qml</file>
+        <file>UiTheme/TabBar.qml</file>
+        <file>UiTheme/TabButton.qml</file>
+        <file>UiTheme/Text.qml</file>
+        <file>UiTheme/TextArea.qml</file>
+        <file>UiTheme/TextField.qml</file>
+        <file>UiTheme/Theme.qml</file>
+        <file>UiTheme/ToolBar.qml</file>
+        <file>UiTheme/ToolButton.qml</file>
+        <file>UiTheme/ToolSeparator.qml</file>
+        <file>UiTheme/ToolTip.qml</file>
+        <file>pages/HomePage.qml</file>
     </qresource>
 </RCC>

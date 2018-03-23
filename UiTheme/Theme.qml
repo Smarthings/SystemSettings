@@ -50,7 +50,7 @@ Item {
     readonly property color lightBackground: "#efefef"
     readonly property color lightHeaderBackground: "#DFDFDF"
     readonly property color lightView: "#F9F9F9"
-    readonly property color lightText: "#000"
+    readonly property color lightText: "#333"
     readonly property color lightTextComponents: "#8E8E93"
     readonly property color lightTextComponentsFocus: "#66666A"
     readonly property color lightTextDisabled: "#666"

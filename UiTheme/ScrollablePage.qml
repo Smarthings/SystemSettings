@@ -7,6 +7,7 @@ Page {
     id: page
 
     default property alias content: pane.contentItem
+    property int paddingPane: 0
     color: Theme.background
 
     Flickable {
@@ -18,7 +19,7 @@ Page {
             id: pane
             width: parent.width
 
-            padding: 0
+            padding: page.paddingPane
             topPadding: 10
             bottomPadding: 8
         }

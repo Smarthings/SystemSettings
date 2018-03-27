@@ -38,3 +38,6 @@ unix {
 #    INCLUDEPATH += /usr/local/lib
 #    LIBS += -L/usr/local/lib -lHtSystem
 #}
+
+HEADERS += \
+    modules.h

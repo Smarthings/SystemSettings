@@ -29,7 +29,7 @@ ScrollablePage {
                 height: 40
                 to: 255
                 from: 10
-                value: 20
+                value: screen.brightness
                 onValueChanged: screen.setBrightness(Math.round(value))
             }
         }
@@ -59,7 +59,7 @@ ScrollablePage {
 
         Screen {
             id: screen
-            Component.onCompleted: console.log(brightness)
+            onBrightnessChanged: console.log(brightness);
         }
     }
 }

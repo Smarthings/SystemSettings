@@ -48,5 +48,16 @@
         <file>UiTheme/ToolSeparator.qml</file>
         <file>UiTheme/ToolTip.qml</file>
         <file>pages/HomePage.qml</file>
+        <file>pages/DisplayPage.qml</file>
+        <file>pages/HeaderDefault.qml</file>
+        <file>pages/DateTimePage.qml</file>
+        <file>pages/UsersPage.qml</file>
+        <file>pages/WiredPage.qml</file>
+        <file>pages/WirelessPage.qml</file>
+        <file>pages/LanguagePage.qml</file>
+        <file>pages/ThemePage.qml</file>
+        <file>pages/SystemPage.qml</file>
+        <file>pages/UpdatePage.qml</file>
+        <file>UiTheme/SmartSlider.qml</file>
     </qresource>
 </RCC>

@@ -68,13 +68,29 @@ Item {
     readonly property color lighter: "#F9F9F9"
     readonly property color grey: "#8E8E93"
     readonly property color lightgrey: "#CECED2"
+
+    readonly property color indigo: "#3F51B5"
     readonly property color blue: "#007AFF"
+    readonly property color bluegrey: "#607D8B"
+    readonly property color lightblue: "#03A9F4"
+    readonly property color cyan: "#00BCD4"
     readonly property color tealblue: "#5AC8FA"
+
+    readonly property color teal: "#009688"
     readonly property color green: "#4CD964"
+    readonly property color lime: "#CDDC39"
+    readonly property color lightgreen: "#8BC34A"
+
     readonly property color yellow: "#FFCC00"
-    readonly property color red: "#FF3B30"
-    readonly property color orange: "#FF9500"
-    readonly property color purple: "#5856D6"
+
+    readonly property color red: "#e60000"
+
+    readonly property color orange: "#FF9800"
+    readonly property color deeporange: "#FF5722"
+
+    readonly property color purple: "#9C27B0"
+    readonly property color deeppurple: "#673AB7"
+
     readonly property color pink: "#FF2D55"
 
     readonly property int pixelSize: 14

@@ -30,7 +30,9 @@ T.SwitchDelegate {
         text: control.text
         font: control.font
         color: !control.enabled? Theme.textDisabled : (control.down ? Theme.color50(Theme.text) : Theme.text)
-        elide: Text.ElideRight
+        //elide: Text.ElideRight
+        width: parent.width
+        wrapMode: Text.WordWrap
         visible: control.text
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter

@@ -7,6 +7,9 @@ import "../UiTheme/"
 Pane {
     width: parent.width
     height: parent.height
+    property var headerPage: HeaderDefault {}
+    clip: true
+    backgroundColor: Theme.background
 
     GridView {
         id: grid
@@ -16,85 +19,45 @@ Pane {
         cellHeight: 150
         anchors.horizontalCenter: parent.horizontalCenter
 
-        header: Text {
-            width: parent.width
-            height: implicitHeight * 1.5
-            text: qsTr("Bem-vindo às Configurações do Sistema")
-            font.pixelSize: 24
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Qt.AlignHCenter
-            verticalAlignment: Qt.AlignVCenter
-        }
+        model: menus
 
-        model: [
-            {
-                title: qsTr("Rede s/ fio"),
-                icon: "\uE1BA",
-                page: "qrc://",
-                color: Theme.red
-            },
-            {
-                title: qsTr("Rede c/ fio"),
-                icon: "\uE8BE",
-                page: "qrc://",
-                color: Theme.green
-            },
-            {
-                title: qsTr("Tela"),
-                icon: "\uE333",
-                page: "qrc://",
-                color: Theme.orange
-            },
-            {
-                title: qsTr("Sistema"),
-                icon: "\uE88E",
-                page: "qrc://",
-                color: Theme.tealblue
-            },
-            {
-                title: qsTr("Atualização"),
-                icon: "\uE863",
-                page: "qrc://",
-                color: Theme.grey
-            },
-        ]
         delegate: Rectangle {
             width: grid.cellWidth - 15
             height: grid.cellHeight - 15
-            color: component.pressed? Theme.color70(modelData.color) : modelData.color
-            radius: 5
+            color: Theme.components //component.pressed? Theme.color70(modelData.color) : modelData.color
+            radius: 10
             clip: true
 
             ColumnLayout {
                 anchors.fill: parent
+
                 Text {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     text: modelData.icon
-                    font.pixelSize: parent.height * 0.7
+                    font.pixelSize: (parent.height - parent.children[1].height) * 0.7
                     font.family: material_icons.name
                     verticalAlignment: Qt.AlignVCenter
                     horizontalAlignment: Qt.AlignHCenter
-                    color: Theme.darkText
+                    color: modelData.color //Theme.darkText
                 }
 
                 Text {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 25
+                    Layout.preferredHeight: contentHeight + 5
                     text: modelData.title
                     verticalAlignment: Qt.AlignVCenter
                     horizontalAlignment: Qt.AlignHCenter
-                    color: Theme.darkText
+                    //color: Theme.darkText
                     font.capitalization: Font.AllUppercase
+                    wrapMode: Text.WordWrap
                 }
             }
 
             MouseArea {
                 id: component
                 anchors.fill: parent
-                onPressed: {
-                    ToolTip.show(modelData.title, 5000)
-                }
+                onClicked: stackview.push(modelData.page)
             }
         }
         focus: true

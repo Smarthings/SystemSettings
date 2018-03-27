@@ -27,3 +27,14 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+
+unix {
+    INCLUDEPATH += /usr/local/lib
+    LIBS += -L/usr/lib -lHtSystem
+}
+
+#macx {
+#    INCLUDEPATH += /usr/local/lib
+#    LIBS += -L/usr/local/lib -lHtSystem
+#}

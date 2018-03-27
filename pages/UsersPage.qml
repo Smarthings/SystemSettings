@@ -8,6 +8,7 @@ ScrollablePage {
     width: stackview.width
     height: stackview.height
     color: Theme.background
+    padding: 10
 
     property var headerPage: HeaderDefault {}
     property string titlePage: qsTr("Usuários")

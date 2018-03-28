@@ -55,7 +55,7 @@ T.GroupBox {
             height: 1
             color: control.borderColor
 
-            anchors.top: parent.top
+            anchors.top: background.top
         }
 
         Rectangle {
@@ -64,7 +64,7 @@ T.GroupBox {
             height: 1
             color: control.borderColor
 
-            anchors.bottom: parent.bottom
+            anchors.bottom: background.bottom
         }
     }
 

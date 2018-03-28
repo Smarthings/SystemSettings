@@ -43,21 +43,48 @@ ScrollablePage {
             padding: 10
             title: qsTr("Rotação da Tela")
 
-            Column {
+            SwitchDelegate {
                 width: parent.width
-
-                SwitchDelegate {
-                    width: parent.width
-                    text: qsTr("Inverter Tela")
-                }
-                Text {
-                    width: parent.width
-                    horizontalAlignment: Qt.AlignRight
-                    text: qsTr("*exige reiniciar o sistema")
-                    font.pixelSize: Theme.pixelSize * 0.8
-                    color: Theme.color70(Theme.text)
+                text: qsTr("Inverter Tela")
+                checked: screen.rotation
+                onClicked: {
+                    if (screen.setRotation(checked))
+                        rotationSuccess.open()
+                    else
+                        ToolTip.show(qsTr("Não foi possível mudar a rotação da tela"), 5000)
                 }
             }
+        }
+
+        Dialog {
+            id: rotationSuccess
+            width: 300
+            modal: true
+            blur: true
+
+            Column {
+                anchors.fill: parent
+                spacing: 20
+
+                Text {
+                    width: parent.width
+                    wrapMode: Text.WordWrap
+                    text: qsTr("Para que essa configuração seja aplicada, é necessário reiniciar o sistema.")
+                    font.pixelSize: Theme.pixelSize * 1.1
+                    horizontalAlignment: Qt.AlignHCenter
+                    color: Theme.alert
+                }
+
+                Text {
+                    width: parent.width
+                    wrapMode: Text.WordWrap
+                    text: qsTr("Deseja reiniciar agora?")
+                    horizontalAlignment: Qt.AlignHCenter
+                }
+            }
+
+            standardButtons: Dialog.Yes | Dialog.No
+            onAccepted: system.restartSystem()
         }
 
         Screen {

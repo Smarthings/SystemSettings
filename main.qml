@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
+import System 1.0
 
 import "./UiTheme/"
 import "./pages/"
@@ -131,24 +132,6 @@ ApplicationWindow {
         }
     }
 
-//    RowLayout {
-//        anchors.fill: parent
-//        spacing: 5
-
-//        Pane {
-//            padding: 0
-//            Layout.fillHeight: true
-//            Layout.preferredWidth: 200
-//            visible: stackview.depth > 1
-//            enabled: stackview.depth > 1
-//            //backgroundColor: Theme.view
-
-//            Loader {
-//                sourceComponent: sidebar
-//            }
-//        }
-//    }
-
     StackView {
         id: stackview
         width: parent.width
@@ -163,8 +146,6 @@ ApplicationWindow {
         }
     }
 
-
-
     FontLoader {
         id: ubuntu
         name: "Ubuntu"
@@ -174,5 +155,9 @@ ApplicationWindow {
     FontLoader {
         id: material_icons
         source: "qrc:/UiTheme/fonts/MaterialIcons.ttf"
+    }
+
+    System {
+        id: system
     }
 }

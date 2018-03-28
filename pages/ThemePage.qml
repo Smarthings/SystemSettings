@@ -44,19 +44,21 @@ ScrollablePage {
             ComboBox {
                 width: parent.width
                 implicitHeight: Theme.implicitHeightComponents
-                currentIndex: -1
+                currentIndex: Theme.getColorPos(settings.accent)
 
                 model: [
-                    "Lighter",
                     "Grey",
-                    "LightGrey",
                     "Blue",
-                    "Teal blue",
+                    "Indigo",
+                    "BlueGrey",
+                    "TealBlue",
+                    "Lime",
                     "Green",
-                    "Yellow",
-                    "Red",
                     "Orange",
+                    "DeepOrange",
+                    "Red",
                     "Purple",
+                    "DeepPurple",
                     "Pink"
                 ]
 

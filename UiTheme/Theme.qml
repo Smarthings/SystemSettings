@@ -68,30 +68,68 @@ Item {
     readonly property color lighter: "#F9F9F9"
     readonly property color grey: "#8E8E93"
     readonly property color lightgrey: "#CECED2"
-
     readonly property color indigo: "#3F51B5"
     readonly property color blue: "#007AFF"
     readonly property color bluegrey: "#607D8B"
     readonly property color lightblue: "#03A9F4"
     readonly property color cyan: "#00BCD4"
     readonly property color tealblue: "#5AC8FA"
-
     readonly property color teal: "#009688"
     readonly property color green: "#4CD964"
     readonly property color lime: "#CDDC39"
     readonly property color lightgreen: "#8BC34A"
-
     readonly property color yellow: "#FFCC00"
-
     readonly property color red: "#e60000"
-
     readonly property color orange: "#FF9800"
     readonly property color deeporange: "#FF5722"
-
     readonly property color purple: "#9C27B0"
     readonly property color deeppurple: "#673AB7"
-
     readonly property color pink: "#FF2D55"
+
+    function getColor(index)
+    {
+        var color = "";
+        switch (index)
+        {
+        case 0: color = grey; break;
+        case 1: color = blue; break;
+        case 2: color = indigo; break;
+        case 3: color = bluegrey; break;
+        case 4: color = tealblue; break;
+        case 5: color = lime; break;
+        case 6: color = green; break;
+        case 7: color = orange; break;
+        case 8: color = deeporange; break;
+        case 9: color = red; break;
+        case 10: color = purple; break;
+        case 11: color = deeppurple; break;
+        case 12: color = pink; break;
+        }
+        return color;
+    }
+
+    function getColorPos(color)
+    {
+        var pos = -1;
+        switch (color)
+        {
+        case grey: pos = 0; break;
+        case blue: pos = 1; break;
+        case indigo: pos = 2; break;
+        case bluegrey: pos = 3; break;
+        case tealblue: pos = 4; break;
+        case lime: pos = 5; break;
+        case green: pos = 6; break;
+        case orange: pos = 7; break;
+        case deeporange: pos = 8; break;
+        case red: pos = 9; break;
+        case purple: pos = 10; break;
+        case deeppurple: pos = 11; break;
+        case pink: pos = 12; break;
+        }
+
+        return pos;
+    }
 
     readonly property int pixelSize: 14
     readonly property int implicitHeightComponents: 35
@@ -143,37 +181,5 @@ Item {
     function checkedPressed(color)
     {
         return Qt.rgba(color.r, color.g, color.b, 0.70);
-    }
-
-    function getColor(index)
-    {
-        var color = "";
-        switch (index)
-        {
-        case 0: color = lighter
-            break;
-        case 1: color = grey
-            break;
-        case 2: color = lightgrey
-            break;
-        case 3: color = blue
-            break;
-        case 4: color = tealblue
-            break;
-        case 5: color = green
-            break;
-        case 6: color = yellow
-            break;
-        case 7: color = red
-            break;
-        case 8: color = orange
-            break;
-        case 9: color = purple
-            break;
-        case 10: color = pink
-            break;
-        }
-
-        return color;
     }
 }

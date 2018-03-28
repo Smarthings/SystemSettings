@@ -34,10 +34,10 @@ unix {
     LIBS += -L/usr/lib -lHtSystem
 }
 
-#macx {
-#    INCLUDEPATH += /usr/local/lib
-#    LIBS += -L/usr/local/lib -lHtSystem
-#}
+macx {
+    INCLUDEPATH += /usr/local/lib
+    LIBS += -L/usr/local/lib -lHtSystem
+}
 
 HEADERS += \
     modules.h

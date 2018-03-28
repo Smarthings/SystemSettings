@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.3
 
 import "./"
 
@@ -10,20 +11,40 @@ Page {
     property int paddingPane: 0
     color: Theme.background
 
-    Flickable {
+    property var sidebar: null
+
+    RowLayout {
         anchors.fill: parent
-        contentHeight: pane.implicitHeight
-        flickableDirection: Flickable.AutoFlickIfNeeded
+        spacing: 0
 
         Pane {
-            id: pane
-            width: parent.width
+            padding: 0
+            Layout.fillHeight: true
+            Layout.preferredWidth: 200
+            visible: page.sidebar !== null
+            enabled: page.sidebar !== null
 
-            padding: page.paddingPane
-            topPadding: 10
-            bottomPadding: 8
+            Loader {
+                sourceComponent: page.sidebar
+
+            }
         }
 
-        ScrollIndicator.vertical: ScrollIndicator { }
+        Flickable {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            contentHeight: pane.implicitHeight
+            flickableDirection: Flickable.AutoFlickIfNeeded
+
+            Pane {
+                id: pane
+                width: parent.width
+                anchors.fill: parent
+                anchors.margins: page.paddingPane
+
+            }
+
+            ScrollIndicator.vertical: ScrollIndicator { }
+        }
     }
 }

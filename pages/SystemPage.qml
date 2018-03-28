@@ -9,6 +9,9 @@ ScrollablePage {
     height: stackview.height
     color: Theme.background
 
+    paddingPane: 10
+    sidebar: sideBar
+
     property var headerPage: HeaderDefault {}
     property string titlePage: qsTr("Informações do Sistema")
 }

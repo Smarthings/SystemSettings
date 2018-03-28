@@ -8,7 +8,9 @@ ScrollablePage {
     width: stackview.width
     height: stackview.height
     color: Theme.background
-    padding: 10
+
+    paddingPane: 10
+    sidebar: sideBar
 
     property var headerPage: HeaderDefault {}
     property string titlePage: qsTr("Rede s/ fio")

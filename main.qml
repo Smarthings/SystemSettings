@@ -90,7 +90,7 @@ ApplicationWindow {
     ]
 
     Component {
-        id: sidebar
+        id: sideBar
 
         GroupBox {
             width: parent.parent.width
@@ -131,35 +131,35 @@ ApplicationWindow {
         }
     }
 
-    RowLayout {
-        anchors.fill: parent
-        spacing: 5
+//    RowLayout {
+//        anchors.fill: parent
+//        spacing: 5
 
-        Pane {
-            padding: 0
-            Layout.fillHeight: true
-            Layout.preferredWidth: 200
-            visible: stackview.depth > 1
-            enabled: stackview.depth > 1
-            //backgroundColor: Theme.view
+//        Pane {
+//            padding: 0
+//            Layout.fillHeight: true
+//            Layout.preferredWidth: 200
+//            visible: stackview.depth > 1
+//            enabled: stackview.depth > 1
+//            //backgroundColor: Theme.view
 
-            Loader {
-                sourceComponent: sidebar
-            }
-        }
+//            Loader {
+//                sourceComponent: sidebar
+//            }
+//        }
+//    }
 
-        StackView {
-            id: stackview
-            width: parent.width
-            height: parent.height
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            initialItem: HomePage {}
+    StackView {
+        id: stackview
+        width: parent.width
+        height: parent.height
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+        initialItem: HomePage {}
 
-            onCurrentItemChanged: {
-                titlePage = stackview.currentItem.titleHeader ? stackview.currentItem.titleHeader : qsTr("Configurações do Sistema")
-                window.header = stackview.currentItem.headerPage ? stackview.currentItem.headerPage : ""
-            }
+        onCurrentItemChanged: {
+            titlePage = stackview.currentItem.titleHeader ? stackview.currentItem.titleHeader : qsTr("Configurações do Sistema")
+            window.header = stackview.currentItem.headerPage ? stackview.currentItem.headerPage : ""
         }
     }
 

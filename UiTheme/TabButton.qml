@@ -23,6 +23,8 @@ T.TabButton {
     property string icon
     property var iconSource: control.font
     property int iconPixelSize: Theme.pixelSize * 1.5
+    property color colorAccent: Theme.text
+    property bool checkedIndicator: true
 
     font.pixelSize: Theme.pixelSize
 
@@ -42,7 +44,15 @@ T.TabButton {
                 text: control.icon
                 font.family: control.iconSource
                 font.pixelSize: control.iconPixelSize
-                color: control.checked? Theme.color70(Theme.text) : Theme.text
+                color: control.checked? control.colorAccent : Theme.color70(Theme.text)
+
+                Rectangle {
+                    visible: control.checked
+                    width: parent.width
+                    height: 2
+                    color: control.colorAccent
+                    anchors.bottom: parent.bottom
+                }
             }
 
             Text {
@@ -52,7 +62,15 @@ T.TabButton {
                 horizontalAlignment: control.horizontal? Qt.AlignHCenter : Qt.AlignLeft
                 text: control.text
                 font: control.font
-                color: control.checked? Theme.color70(Theme.text) : Theme.text
+                color: control.checked? control.colorAccent : Theme.color70(Theme.text)
+
+                Rectangle {
+                    visible: control.checked
+                    width: parent.width
+                    height: 2
+                    color: control.colorAccent
+                    anchors.bottom: parent.bottom
+                }
             }
         }
     }
@@ -73,7 +91,7 @@ T.TabButton {
                 text: control.icon
                 font.family: control.iconSource
                 font.pixelSize: control.iconPixelSize
-                color: control.checked? Theme.color70(Theme.text) : Theme.text
+                color: control.checked? control.colorAccent : Theme.color70(Theme.text)
             }
 
             Text {
@@ -83,7 +101,15 @@ T.TabButton {
                 horizontalAlignment: Qt.AlignHCenter
                 text: control.text
                 font: control.font
-                color: control.checked? Theme.color70(Theme.text) : Theme.text
+                color: control.checked? control.colorAccent : Theme.color70(Theme.text)
+            }
+
+            Rectangle {
+                visible: control.checked
+                width: parent.width
+                height: 2
+                color: control.colorAccent
+                anchors.bottom: parent.bottom
             }
         }
     }

@@ -72,7 +72,7 @@ ApplicationWindow {
         },
         {
             title: qsTr("Aparência"),
-            icon: "\uE243",
+            icon: "\uE41D",
             page: "qrc:/pages/ThemePage.qml",
             color: Theme.lightgreen
         },

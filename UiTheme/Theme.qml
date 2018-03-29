@@ -134,6 +134,11 @@ Item {
     readonly property int pixelSize: 14
     readonly property int implicitHeightComponents: 35
 
+    function rgba(color, alpha)
+    {
+        return Qt.rgba(color.r, color.g, color.b, alpha)
+    }
+
     function color50(color)
     {
         return Qt.rgba(color.r, color.g, color.b, 0.5);

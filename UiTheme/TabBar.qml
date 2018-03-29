@@ -14,7 +14,7 @@ T.TabBar {
 
     spacing: 1
 
-    property color color: Qt.rgba(Theme.accent.r, Theme.accent.g, Theme.accent.b, 1)
+    property color color: "transparent"
 
 
     contentItem: ListView {

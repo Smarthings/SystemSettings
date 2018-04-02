@@ -49,9 +49,10 @@ ScrollablePage {
 
         StackLayout {
             width: parent.width
-            height: page.height - tabBar.height - 15
+            height: page.height
             currentIndex: tabBar.currentIndex
 
+            // Redes disponíveis
             ColumnLayout {
                 anchors.fill: parent
                 spacing: 10
@@ -84,26 +85,209 @@ ScrollablePage {
 
                             value: qsTr("Canal: ") + modelData.Channel
 
+                            onClicked: {
+                                connectWifi.title = modelData.ESSID
+                                connectWifi.open()
+                            }
+
                             BorderBottom {}
                         }
+                    }
+
+                    Dialog {
+                        id: connectWifi
+                        width: 300
+
+                        Column {
+                            width: parent.width
+                            spacing: 10
+                        }
+
+                        standardButtons: Dialog.Cancel | Dialog.Yes
                     }
                 }
             }
 
-            Item {
-                width: parent.width
+            // Informações da Rede
+            Column {
+                anchors.fill: parent
+                spacing: 10
+
+                GroupBox {
+                    width: parent.width
+                    title: qsTr("Tipo de configuração")
+                    padding: 10
+                    radius: 5
+
+                    ComboBox {
+                        id: configType
+                        width: parent.width
+                        model: ["Dinâmico", "Manual"]
+                    }
+                }
+
+                Text {
+                    width: parent.width
+                    height: Theme.pixelSize * 2
+                    text: "IPV4"
+                    verticalAlignment: Qt.AlignVCenter
+                    font.bold: true
+
+                    BorderBottom {}
+                }
+
+                RowLayout {
+                    width: parent.width
+
+                    GroupBox {
+                        Layout.fillWidth: true
+                        title: qsTr("Endereço IPV4")
+                        padding: 10
+                        radius: 5
+
+                        TextField {
+                            width: parent.width
+                            text: wireless.info["wlan0"].ipv4.address
+                            enabled: configType.currentIndex
+                            flat: !configType.currentIndex
+                        }
+                    }
+
+                    GroupBox {
+                        Layout.fillWidth: true
+                        title: qsTr("Gateway")
+                        padding: 10
+                        radius: 5
+
+                        TextField {
+                            width: parent.width
+                            text: ""
+                            enabled: configType.currentIndex
+                            flat: !configType.currentIndex
+                        }
+                    }
+                }
+
+                RowLayout {
+                    width: parent.width
+
+                    GroupBox {
+                        Layout.fillWidth: true
+                        title: qsTr("Broadcast")
+                        padding: 10
+                        radius: 5
+
+                        TextField {
+                            width: parent.width
+                            text: wireless.info["wlan0"].ipv4.broadcast
+                            enabled: configType.currentIndex
+                            flat: !configType.currentIndex
+                        }
+                    }
+
+                    GroupBox {
+                        Layout.fillWidth: true
+                        title: qsTr("Mascara de Rede")
+                        padding: 10
+                        radius: 5
+
+                        TextField {
+                            width: parent.width
+                            text: wireless.info["wlan0"].ipv4.netmask
+                            enabled: configType.currentIndex
+                            flat: !configType.currentIndex
+                        }
+                    }
+                }
+
+                Text {
+                    width: parent.width
+                    height: Theme.pixelSize * 2
+                    text: "IPV6"
+                    verticalAlignment: Qt.AlignVCenter
+                    font.bold: true
+
+                    BorderBottom {}
+                }
+
+                RowLayout {
+                    width: parent.width
+
+                    GroupBox {
+                        Layout.fillWidth: true
+                        title: qsTr("Endereço IPV4")
+                        padding: 10
+                        radius: 5
+
+                        TextField {
+                            width: parent.width
+                            text: wireless.info["wlan0"].ipv6.address
+                            enabled: configType.currentIndex
+                            flat: !configType.currentIndex
+                        }
+                    }
+
+                    GroupBox {
+                        Layout.fillWidth: true
+                        title: qsTr("Gateway")
+                        padding: 10
+                        radius: 5
+
+                        TextField {
+                            width: parent.width
+                            text: ""
+                            enabled: configType.currentIndex
+                            flat: !configType.currentIndex
+                        }
+                    }
+                }
+
+                RowLayout {
+                    width: parent.width
+
+                    GroupBox {
+                        Layout.fillWidth: true
+                        title: qsTr("Broadcast")
+                        padding: 10
+                        radius: 5
+
+                        TextField {
+                            width: parent.width
+                            text: wireless.info["wlan0"].ipv6.broadcast
+                            enabled: configType.currentIndex
+                            flat: !configType.currentIndex
+                        }
+                    }
+
+                    GroupBox {
+                        Layout.fillWidth: true
+                        title: qsTr("Mascara de Rede")
+                        padding: 10
+                        radius: 5
+
+                        TextField {
+                            width: parent.width
+                            text: wireless.info["wlan0"].ipv6.netmask
+                            enabled: configType.currentIndex
+                            flat: !configType.currentIndex
+                        }
+                    }
+                }
             }
         }
 
         Wireless {
             id: wireless
 
+            onInfoChanged: console.log(Object.keys(wireless.info), Object.keys(wireless.info["wlan0"]), Object.keys(wireless.info['wlan0'].ipv4))
+
             //onNetwork_listChanged: console.log(Object.keys(network_list), Object.keys(network_list[0]))
         }
 
         Component.onCompleted: {
-            wireless.setInterface("wlp2s0");
+            wireless.setInterface("wlan0");
             wireless.scanWireless();
+            wireless.abstractInfo();
         }
     }
 }

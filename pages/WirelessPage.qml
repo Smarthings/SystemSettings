@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Wireless 1.0
+import Network 1.0
 
 import "../UiTheme/"
 
@@ -25,6 +26,7 @@ ScrollablePage {
             id: tabBar
             width: parent.width
             height: 40
+            clip: true
 
             TabButton {
                 width: implicitWidth + 15
@@ -97,6 +99,7 @@ ScrollablePage {
                     Dialog {
                         id: connectWifi
                         width: 300
+                        modal: true
 
                         Column {
                             width: parent.width
@@ -147,7 +150,7 @@ ScrollablePage {
 
                         TextField {
                             width: parent.width
-                            text: wireless.info["wlan0"].ipv4.address
+                            text: wireless.info["wlp2s0"].ipv4.address
                             enabled: configType.currentIndex
                             flat: !configType.currentIndex
                         }
@@ -161,7 +164,7 @@ ScrollablePage {
 
                         TextField {
                             width: parent.width
-                            text: ""
+                            text: wireless.info["wlp2s0"].ipv4.gateway
                             enabled: configType.currentIndex
                             flat: !configType.currentIndex
                         }
@@ -179,7 +182,7 @@ ScrollablePage {
 
                         TextField {
                             width: parent.width
-                            text: wireless.info["wlan0"].ipv4.broadcast
+                            text: wireless.info["wlp2s0"].ipv4.broadcast
                             enabled: configType.currentIndex
                             flat: !configType.currentIndex
                         }
@@ -193,13 +196,13 @@ ScrollablePage {
 
                         TextField {
                             width: parent.width
-                            text: wireless.info["wlan0"].ipv4.netmask
+                            text: wireless.info["wlp2s0"].ipv4.netmask
                             enabled: configType.currentIndex
                             flat: !configType.currentIndex
                         }
                     }
                 }
-
+                /*
                 Text {
                     width: parent.width
                     height: Theme.pixelSize * 2
@@ -221,7 +224,7 @@ ScrollablePage {
 
                         TextField {
                             width: parent.width
-                            text: wireless.info["wlan0"].ipv6.address
+                            text: wireless.info["wlp2s0"].ipv6.address
                             enabled: configType.currentIndex
                             flat: !configType.currentIndex
                         }
@@ -253,7 +256,7 @@ ScrollablePage {
 
                         TextField {
                             width: parent.width
-                            text: wireless.info["wlan0"].ipv6.broadcast
+                            text: wireless.info["wlp2s0"].ipv6.broadcast
                             enabled: configType.currentIndex
                             flat: !configType.currentIndex
                         }
@@ -267,25 +270,28 @@ ScrollablePage {
 
                         TextField {
                             width: parent.width
-                            text: wireless.info["wlan0"].ipv6.netmask
+                            text: wireless.info["wlp2s0"].ipv6.netmask
                             enabled: configType.currentIndex
                             flat: !configType.currentIndex
                         }
                     }
                 }
+                */
             }
         }
 
         Wireless {
             id: wireless
-
-            onInfoChanged: console.log(Object.keys(wireless.info), Object.keys(wireless.info["wlan0"]), Object.keys(wireless.info['wlan0'].ipv4))
-
+            //onInfoChanged: console.log(Object.keys(wireless.info), Object.keys(wireless.info["wlp2s0"]), Object.keys(wireless.info['wlp2s0'].ipv4))
             //onNetwork_listChanged: console.log(Object.keys(network_list), Object.keys(network_list[0]))
         }
 
+        Network {
+            id: network
+        }
+
         Component.onCompleted: {
-            wireless.setInterface("wlan0");
+            wireless.setInterface("wlp2s0");
             wireless.scanWireless();
             wireless.abstractInfo();
         }

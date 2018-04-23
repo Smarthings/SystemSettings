@@ -100,13 +100,55 @@ ScrollablePage {
                         id: connectWifi
                         width: 300
                         modal: true
+                        radius: 5
 
                         Column {
                             width: parent.width
                             spacing: 10
-                        }
 
-                        standardButtons: Dialog.Cancel | Dialog.Yes
+                            TextField {
+                                id: password_field
+                                width: parent.width
+                                echoMode: TextInput.Password
+                                placeholderText: qsTr("Senha")
+
+                                ToolTip {
+                                    id: message
+
+                                    timeout: 5000
+                                    onTextChanged: {
+                                        if (text !== "")
+                                            message.visible = true
+                                    }
+
+                                    onVisibleChanged: {
+                                        if (visible === false)
+                                            text = ""
+                                    }
+                                }
+                            }
+
+                            Item {
+                                width: parent.width
+                                height: Theme.implicitHeightComponents * 1.2
+
+                                Button {
+                                    text: qsTr("Conectar")
+                                    color: Theme.success
+                                    anchors.right: parent.right
+
+                                    onClicked: {
+                                        if (password_field.text === "")
+                                        {
+                                            password_field.focus = true
+                                            ToolTip.show(qsTr("Informe a senha"), 5000);
+                                        }
+                                        else
+                                            wireless.setNetworkWireless({'ESSID': connectWifi.title, 'password': password_field.text});
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -282,12 +324,11 @@ ScrollablePage {
 
         Wireless {
             id: wireless
-            //onInfoChanged: console.log(Object.keys(wireless.info), Object.keys(wireless.info["wlp2s0"]), Object.keys(wireless.info['wlp2s0'].ipv4))
-            //onNetwork_listChanged: console.log(Object.keys(network_list), Object.keys(network_list[0]))
-        }
-
-        Network {
-            id: network
+            onErrorChanged: message.text = wireless.error.split(":").slice(1).join(" ").trim();
+            onNetworkWirelessChanged: {
+                if (networkWireless.status)
+                    connectWifi.close();
+            }
         }
 
         Component.onCompleted: {

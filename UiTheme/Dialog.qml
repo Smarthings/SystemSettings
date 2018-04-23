@@ -12,6 +12,7 @@ T.Dialog {
     property bool border: false
     property int header_height: ApplicationWindow.header.height
     property bool blur: false
+    property int radius: 2
 
     parent: ApplicationWindow.overlay
 
@@ -38,7 +39,7 @@ T.Dialog {
         anchors.fill: parent
         color: Qt.rgba(dialog.color.r, dialog.color.g, dialog.color.b, 1)
         border.color: dialog.modal || !dialog.border? "transparent" : Theme.componentsBorder
-        radius: 2
+        radius: dialog.radius
 
         FastBlur {
             id: fastBlur

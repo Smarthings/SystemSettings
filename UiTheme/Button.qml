@@ -38,6 +38,10 @@ T.Button {
         text: control.text
         font.bold: flat
 
+        color: control.flat? (control.checked || control.highlighted ?
+                               (control.visualFocus ? (control.down ? Theme.checkedFocus(control.color): Theme.focus(control.color)) : (control.down ? Theme.checkedPressed(control.color) : Theme.checked(control.color))) :
+                               (control.visualFocus ? (control.down ? Theme.focusPressed(control.color) : Theme.focusLight(control.color)) : (control.down ? Theme.pressed(control.color) : control.color))) : Theme.text
+
         anchors.fill: parent
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

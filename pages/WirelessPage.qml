@@ -74,6 +74,7 @@ ScrollablePage {
                             width: parent.width
                             height: Theme.implicitHeightComponents * 1.2
                             text: modelData.ESSID
+                            highlighted: modelData.ESSID === wireless.connected
 
                             leftIcon: Text {
                                 text: modelData.Encryption === "on" ? "\uE1E1" : "\uE1BA"
@@ -85,11 +86,29 @@ ScrollablePage {
                                 verticalAlignment: Qt.AlignVCenter
                             }
 
-                            value: qsTr("Canal: ") + modelData.Channel
+                            valueControl: Text {
+                                visible: modelData.saved !== undefined
+                                text: modelData.saved !== undefined? "\uE161" : ""
+                                font.family: material_icons.name
+                                anchors.fill: parent
+                                color: Theme.rgba(Theme.text, 0.7)
+                                font.pixelSize: 18
+                                horizontalAlignment: Qt.AlignHCenter
+                                verticalAlignment: Qt.AlignVCenter
+                            }
 
                             onClicked: {
-                                connectWifi.title = modelData.ESSID
-                                connectWifi.open()
+                                if (modelData.ESSID === wireless.connected)
+                                {
+                                    connectedWifi.title = modelData.ESSID
+                                    connectedWifi.open()
+                                }
+                                else
+                                {
+                                    connectWifi.title = modelData.ESSID
+                                    connectWifi.open()
+                                }
+
                             }
 
                             BorderBottom {}
@@ -98,12 +117,14 @@ ScrollablePage {
 
                     Dialog {
                         id: connectWifi
-                        width: 300
+                        width: (window.width <= 360)? 300 : 400
                         modal: true
                         radius: 5
 
                         Column {
-                            width: parent.width
+                            width: parent.width - (leftPadding + rightPadding)
+                            leftPadding: 10
+                            rightPadding: 10
                             spacing: 10
 
                             TextField {
@@ -130,7 +151,7 @@ ScrollablePage {
 
                             Item {
                                 width: parent.width
-                                height: Theme.implicitHeightComponents * 1.2
+                                height: Theme.implicitHeightComponents * 1.5
 
                                 Button {
                                     text: qsTr("Conectar")
@@ -146,6 +167,34 @@ ScrollablePage {
                                         else
                                             wireless.setNetworkWireless({'ESSID': connectWifi.title, 'password': password_field.text});
                                     }
+                                }
+                            }
+                        }
+                    }
+
+                    Dialog {
+                        id: connectedWifi
+                        width: (window.width <= 360)? 300 : 400
+                        modal: true
+                        radius: 5
+
+                        Column {
+                            width: parent.width
+
+                            RowLayout {
+                                width: parent.width
+                                height: Theme.implicitHeightComponents * 2
+                                spacing: 5
+
+                                Button {
+                                    Layout.fillWidth: true
+                                    text: qsTr("Esquecer a rede")
+                                }
+
+                                Button {
+                                    Layout.fillWidth: true
+                                    text: qsTr("Desconectar")
+                                    color: Theme.warning
                                 }
                             }
                         }

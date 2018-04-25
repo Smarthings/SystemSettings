@@ -77,7 +77,7 @@ ScrollablePage {
                             highlighted: modelData.ESSID === wireless.connected
 
                             leftIcon: Text {
-                                text: modelData.Encryption === "on" ? "\uE1E1" : "\uE1BA"
+                                text: modelData.Encryption? "\uE1E1" : "\uE1BA"
                                 font.family: material_icons.name
                                 anchors.fill: parent
                                 color: Theme.rgba(Theme.text, (modelData.Quality.split("/")[0] / modelData.Quality.split("/")[1]).toFixed(2))
@@ -100,15 +100,22 @@ ScrollablePage {
                             onClicked: {
                                 if (modelData.ESSID === wireless.connected)
                                 {
-                                    connectedWifi.title = modelData.ESSID
+                                    connectedWifi.networkData = {
+                                        'ESSID': modelData.ESSID,
+                                        'Encryption': modelData.Encryption,
+                                        'Saved': modelData.saved !== undefined
+                                    };
                                     connectedWifi.open()
                                 }
                                 else
                                 {
-                                    connectWifi.title = modelData.ESSID
+                                    connectWifi.networkData = {
+                                        'ESSID': modelData.ESSID,
+                                        'Encryption': modelData.Encryption,
+                                        'Saved': modelData.saved !== undefined
+                                    };
                                     connectWifi.open()
                                 }
-
                             }
 
                             BorderBottom {}
@@ -121,6 +128,15 @@ ScrollablePage {
                         modal: true
                         radius: 5
 
+                        property var networkData: {
+                            'ESSID': '',
+                            'Encryption': '',
+                            'Saved': '',
+                            'Password': ''
+                        }
+
+                        title: qsTr("Conectar à ") + networkData.ESSID
+
                         Column {
                             width: parent.width - (leftPadding + rightPadding)
                             leftPadding: 10
@@ -129,6 +145,8 @@ ScrollablePage {
 
                             TextField {
                                 id: password_field
+                                enabled: connectWifi.networkData.Encryption && !connectWifi.networkData.Saved
+                                visible: connectWifi.networkData.Encryption && !connectWifi.networkData.Saved
                                 width: parent.width
                                 echoMode: TextInput.Password
                                 placeholderText: qsTr("Senha")
@@ -149,23 +167,56 @@ ScrollablePage {
                                 }
                             }
 
-                            Item {
+                            RowLayout {
                                 width: parent.width
-                                height: Theme.implicitHeightComponents * 1.5
+                                height: Theme.implicitHeightComponents * 2
+                                spacing: 5
 
                                 Button {
-                                    text: qsTr("Conectar")
-                                    color: Theme.success
-                                    anchors.right: parent.right
+                                    enabled: connectWifi.networkData.Saved
+                                    visible: connectWifi.networkData.Saved
+                                    Layout.fillWidth: true
+                                    text: qsTr("Esquecer esta rede")
 
                                     onClicked: {
-                                        if (password_field.text === "")
+                                        if (!wireless.forgetWirelessNetwork(connectWifi.networkData))
+                                            ToolTip.show("Ocorreu algum erro", 5000)
+                                        connectWifi.close();
+                                        connectWifi.networkData = {
+                                            'ESSID': '',
+                                            'Encryption': '',
+                                            'Saved': '',
+                                            'Password': ''
+                                        }
+                                    }
+                                }
+
+                                Button {
+                                    Layout.fillWidth: true
+                                    text: qsTr("Conectar")
+                                    color: Theme.success
+
+                                    onClicked: {
+                                        if (password_field.text === "" && connectWifi.networkData.Encryption && !connectWifi.networkData.Saved)
                                         {
                                             password_field.focus = true
                                             ToolTip.show(qsTr("Informe a senha"), 5000);
                                         }
                                         else
-                                            wireless.setNetworkWireless({'ESSID': connectWifi.title, 'password': password_field.text});
+                                        {
+                                            connectWifi.networkData.Password = password_field.text
+                                            if (wireless.setNetworkWireless(connectWifi.networkData))
+                                            {
+                                                connectWifi.networkData = {
+                                                    'ESSID': '',
+                                                    'Encryption': '',
+                                                    'Saved': '',
+                                                    'Password': ''
+                                                }
+                                            }
+                                            password_field.text = ""
+                                            connectWifi.close();
+                                        }
                                     }
                                 }
                             }
@@ -178,6 +229,15 @@ ScrollablePage {
                         modal: true
                         radius: 5
 
+                        property var networkData: {
+                            'ESSID': '',
+                            'Encryption': '',
+                            'Saved': '',
+                            'Password': ''
+                        }
+
+                        title: networkData.ESSID
+
                         Column {
                             width: parent.width
 
@@ -188,7 +248,19 @@ ScrollablePage {
 
                                 Button {
                                     Layout.fillWidth: true
-                                    text: qsTr("Esquecer a rede")
+                                    text: qsTr("Esquecer esta rede")
+
+                                    onClicked: {
+                                        if (!wireless.forgetWirelessNetwork(connectedWifi.networkData))
+                                            ToolTip.show("Ocorreu algum erro", 5000)
+                                        connectedWifi.close();
+                                        connectedWifi.networkData = {
+                                            'ESSID': '',
+                                            'Encryption': '',
+                                            'Saved': '',
+                                            'Password': ''
+                                        }
+                                    }
                                 }
 
                                 Button {
@@ -374,10 +446,6 @@ ScrollablePage {
         Wireless {
             id: wireless
             onErrorChanged: message.text = wireless.error.split(":").slice(1).join(" ").trim();
-            onNetworkWirelessChanged: {
-                if (networkWireless.status)
-                    connectWifi.close();
-            }
         }
 
         Component.onCompleted: {

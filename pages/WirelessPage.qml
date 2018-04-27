@@ -68,8 +68,15 @@ ScrollablePage {
                         width: parent.width
                         height: parent.height
                         clip: true
+                        cacheBuffer: 100
 
-                        model: wireless.network_list
+                        model: (wireless.network_list.sort(function (a, b) {
+                            if (a.Quality < b.Quality)
+                                return 1;
+                            if (a.Quality > b.Quality)
+                                return -1;
+                            return 0;
+                        }))
                         delegate: ItemDelegate {
                             width: parent.width
                             height: Theme.implicitHeightComponents * 1.2
@@ -130,9 +137,9 @@ ScrollablePage {
 
                         property var networkData: {
                             'ESSID': '',
-                            'Encryption': '',
-                            'Saved': '',
-                            'Password': ''
+                                    'Encryption': '',
+                                    'Saved': '',
+                                    'Password': ''
                         }
 
                         title: qsTr("Conectar à ") + networkData.ESSID
@@ -231,9 +238,9 @@ ScrollablePage {
 
                         property var networkData: {
                             'ESSID': '',
-                            'Encryption': '',
-                            'Saved': '',
-                            'Password': ''
+                                    'Encryption': '',
+                                    'Saved': '',
+                                    'Password': ''
                         }
 
                         title: networkData.ESSID

@@ -18,6 +18,23 @@ ScrollablePage {
     property var headerPage: HeaderDefault {}
     property string titlePage: qsTr("Rede s/ fio")
 
+    function availableNetworks()
+    {
+        model_availableNetworks.clear();
+        var available_networks = wireless.network_list.sort(function (a, b)
+        {
+            if (a.Quality < b.Quality)
+                return 1;
+            if (a.Quality > b.Quality)
+                return -1;
+            return 0;
+        });
+        for (var i = 0; i < available_networks.length; ++i)
+        {
+            model_availableNetworks.append(available_networks[i]);
+        }
+    }
+
     Column {
         anchors.fill: parent
         spacing: 0
@@ -64,38 +81,37 @@ ScrollablePage {
                     Layout.fillWidth: true
                     radius: 5
 
+                    ListModel {
+                        id: model_availableNetworks
+                    }
+
                     ListView {
+                        id: listviewAvailableNetworks
                         width: parent.width
                         height: parent.height
                         clip: true
-                        cacheBuffer: 100
 
-                        model: (wireless.network_list.sort(function (a, b) {
-                            if (a.Quality < b.Quality)
-                                return 1;
-                            if (a.Quality > b.Quality)
-                                return -1;
-                            return 0;
-                        }))
+                        model: model_availableNetworks
+
                         delegate: ItemDelegate {
                             width: parent.width
                             height: Theme.implicitHeightComponents * 1.2
-                            text: modelData.ESSID
-                            highlighted: modelData.ESSID === wireless.connected
+                            text: ESSID
+                            highlighted: ESSID === wireless.connected
 
                             leftIcon: Text {
-                                text: modelData.Encryption? "\uE1E1" : "\uE1BA"
+                                text: Encryption? "\uE1E1" : "\uE1BA"
                                 font.family: material_icons.name
                                 anchors.fill: parent
-                                color: Theme.rgba(Theme.text, (modelData.Quality.split("/")[0] / modelData.Quality.split("/")[1]).toFixed(2))
+                                color: Theme.rgba(Theme.text, (Quality.split("/")[0] / Quality.split("/")[1]).toFixed(2))
                                 font.pixelSize: 18
                                 horizontalAlignment: Qt.AlignHCenter
                                 verticalAlignment: Qt.AlignVCenter
                             }
 
                             valueControl: Text {
-                                visible: modelData.saved !== undefined
-                                text: modelData.saved !== undefined? "\uE161" : ""
+                                visible: saved
+                                text: saved? "\uE161" : ""
                                 font.family: material_icons.name
                                 anchors.fill: parent
                                 color: Theme.rgba(Theme.text, 0.7)
@@ -105,21 +121,21 @@ ScrollablePage {
                             }
 
                             onClicked: {
-                                if (modelData.ESSID === wireless.connected)
+                                if (ESSID === wireless.connected)
                                 {
                                     connectedWifi.networkData = {
-                                        'ESSID': modelData.ESSID,
-                                        'Encryption': modelData.Encryption,
-                                        'Saved': modelData.saved !== undefined
+                                        'ESSID': ESSID,
+                                        'Encryption': Encryption,
+                                        'Saved': saved
                                     };
                                     connectedWifi.open()
                                 }
                                 else
                                 {
                                     connectWifi.networkData = {
-                                        'ESSID': modelData.ESSID,
-                                        'Encryption': modelData.Encryption,
-                                        'Saved': modelData.saved !== undefined
+                                        'ESSID': ESSID,
+                                        'Encryption': Encryption,
+                                        'Saved': saved
                                     };
                                     connectWifi.open()
                                 }
@@ -157,6 +173,9 @@ ScrollablePage {
                                 width: parent.width
                                 echoMode: TextInput.Password
                                 placeholderText: qsTr("Senha")
+
+                                Keys.onReturnPressed: buttonConnect.clicked()
+                                Keys.onEnterPressed: buttonConnect.clicked()
 
                                 ToolTip {
                                     id: message
@@ -199,6 +218,7 @@ ScrollablePage {
                                 }
 
                                 Button {
+                                    id: buttonConnect
                                     Layout.fillWidth: true
                                     text: qsTr("Conectar")
                                     color: Theme.success
@@ -372,6 +392,7 @@ ScrollablePage {
                         }
                     }
                 }
+
                 /*
                 Text {
                     width: parent.width
@@ -453,6 +474,7 @@ ScrollablePage {
         Wireless {
             id: wireless
             onErrorChanged: message.text = wireless.error.split(":").slice(1).join(" ").trim();
+            onNetwork_listChanged: availableNetworks()
         }
 
         Component.onCompleted: {
